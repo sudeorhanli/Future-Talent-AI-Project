@@ -1,4 +1,5 @@
 import streamlit as st
+import matplotlib.pyplot as plt
 
 # Başlık ve Açıklama
 st.set_page_config(page_title="GreenBudget AI", page_icon="🌱")
@@ -35,17 +36,4 @@ col1, col2 = st.columns(2)
 with col1:
     st.metric("Tahmini Toplam Karbon", f"{toplam_co2:.2f} kg CO2")
 with col2:
-    st.metric("Simüle Edilen Yeşil Vergi", f"{potansiyel_vergi:.2f} TL")
-
-st.divider()
-
-# AI Tavsiyesi
-st.subheader("🤖 AI Sürdürülebilirlik Tavsiyesi")
-if toplam_co2 > 15:
-    st.warning("Karbon ayak iziniz ortalamanın üzerinde! Enerji ve su tasarrufu hem bütçenizi hem dünyayı korur.")
-elif toplam_co2 > 0:
-    st.success("Harika! Sürdürülebilir bir tüketim dengesi kurmuşsunuz.")
-else:
-    st.info("Lütfen hesaplama yapmak için verilerinizi giriniz.")
-
-st.info("Bu proje Future Talent Program 201 Bitirme Projesi olarak geliştirilmiştir.")
+    st.metric("Simüle Edilen Yeşil Vergi", f"{potansiyel_vergi
