@@ -36,4 +36,30 @@ col1, col2 = st.columns(2)
 with col1:
     st.metric("Tahmini Toplam Karbon", f"{toplam_co2:.2f} kg CO2")
 with col2:
-    st.metric("Simüle Edilen Yeşil Vergi", f"{potansiyel_vergi
+    st.metric("Simüle Edilen Yeşil Vergi", f"{potansiyel_vergi:.2f} TL")
+
+st.divider()
+
+# Görselleştirme Katmanı (Pasta Grafiği)
+if toplam_co2 > 0:
+    st.subheader("📊 Karbon Kaynaklarınızın Dağılımı")
+    
+    etiketler = ['Ulaşım', 'Elektrik', 'Doğalgaz', 'Su', 'Gıda']
+    veriler = [ulasim * CO2_ULASIM, elektrik * CO2_ELEKTRIK, dogalgaz * CO2_DOGALGAZ, su * CO2_SU, gida * CO2_GIDA]
+    
+    fig1, ax1 = plt.subplots()
+    ax1.pie(veriler, labels=etiketler, autopct='%1.1f%%', startangle=90, colors=['#ff9999','#66b3ff','#99ff99','#ffcc99','#c2c2f0'])
+    ax1.axis('equal') 
+    
+    st.pyplot(fig1)
+
+# AI Tavsiyesi
+st.subheader("🤖 AI Sürdürülebilirlik Tavsiyesi")
+if toplam_co2 > 15:
+    st.warning("Karbon ayak iziniz ortalamanın üzerinde! En büyük kaynağı bulup tasarrufa başlayın.")
+elif toplam_co2 > 0:
+    st.success("Harika! Sürdürülebilir bir tüketim dengesi kurmuşsunuz.")
+else:
+    st.info("Lütfen hesaplama yapmak için verilerinizi giriniz.")
+
+st.info("Bu proje Future Talent Program 201 Bitirme Projesi olarak geliştirilmiştir.")
