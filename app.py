@@ -1,46 +1,44 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 
-# Sayfa Ayarları
-st.set_page_config(page_title="GreenBudget AI", page_icon=":leaf:")
+# Sayfa Ayarları (Sekme başlığı için ikon)
+st.set_page_config(page_title="GreenBudget AI", page_icon="🌱")
 
-st.title(":leaf: GreenBudget AI: Sürdürülebilir Mali Asistan")
+# Ana Başlık - Metin içine doğrudan emoji karakteri ekledik
+st.title("🌿 GreenBudget AI: Sürdürülebilir Mali Asistan")
 st.markdown("""
-Kamu Maliyesi disiplini ile yapay zekayı birleştirerek harcamalarınızın 
-**Karbon Ayak İzini** ve potansiyel **Yeşil Vergi** yükünü hesaplar.
+Kamu Maliyesi disiplini ile yapay zekayı birleştirerek harcamalarınızın **Karbon Ayak İzini** ve potansiyel **Yeşil Vergi** yükünü hesaplar.
 """)
 
-# Yan Menü Sembollü Girişler
-st.sidebar.header(":credit_card: Aylık Harcama Verileri")
+# Yan Menü - Kredi kartı sembolü
+st.sidebar.header("💳 Aylık Harcama Verileri")
 ulasim = st.sidebar.number_input("Akaryakıt Harcaması (TL)", min_value=0)
 elektrik = st.sidebar.number_input("Elektrik Faturası (TL)", min_value=0)
 dogalgaz = st.sidebar.number_input("Doğalgaz Faturası (TL)", min_value=0)
 su = st.sidebar.number_input("Su Faturası (TL)", min_value=0)
 gida = st.sidebar.number_input("Gıda Harcaması (TL)", min_value=0)
 
-# Katsayılar ve Hesaplama
+# Hesaplamalar (Aynı kalıyor)
 CO2_ULASIM, CO2_ELEKTRIK, CO2_DOGALGAZ, CO2_SU, CO2_GIDA = 0.0005, 0.0004, 0.0003, 0.0001, 0.0001
 toplam_co2 = (ulasim * CO2_ULASIM) + (elektrik * CO2_ELEKTRIK) + (dogalgaz * CO2_DOGALGAZ) + (su * CO2_SU) + (gida * CO2_GIDA)
 potansiyel_vergi = toplam_co2 * 0.15
 
-# Sonuç Metrikleri
+# Sonuç Metrikleri - Fabrika ve Banka sembolleri
 col1, col2 = st.columns(2)
 with col1:
-    st.subheader(":factory: Toplam Karbon")
+    st.subheader("🏭 Toplam Karbon")
     st.metric("", f"{toplam_co2:.2f} kg CO2")
 with col2:
-    st.subheader(":classical_building: Yeşil Vergi")
+    st.subheader("🏛️ Yeşil Vergi")
     st.metric("", f"{potansiyel_vergi:.2f} TL")
 
 st.divider()
 
-# Grafik Bölümü
+# Grafik Bölümü - Grafik sembolü
 if toplam_co2 > 0:
-    st.subheader(":bar_chart: Karbon Kaynaklarınızın Dağılımı")
+    st.subheader("📊 Karbon Kaynaklarınızın Dağılımı")
     labels = ['Ulaşım', 'Elektrik', 'Doğalgaz', 'Su', 'Gıda']
     values = [ulasim * CO2_ULASIM, elektrik * CO2_ELEKTRIK, dogalgaz * CO2_DOGALGAZ, su * CO2_SU, gida * CO2_GIDA]
-    
-    # Filtreleme (0 olanları grafiğe alma)
     f_vals = [v for v in values if v > 0]
     f_labs = [labels[i] for i, v in enumerate(values) if v > 0]
     
@@ -50,11 +48,8 @@ if toplam_co2 > 0:
     fig.gca().add_artist(centre_circle)
     st.pyplot(fig)
 
-# Tavsiye Bölümü
-st.subheader(":bulb: AI Sürdürülebilirlik Tavsiyesi")
+# Tavsiye Bölümü - Ampul sembolü
+st.subheader("💡 AI Sürdürülebilirlik Tavsiyesi")
 if toplam_co2 > 15:
     st.warning("Karbon ayak iziniz yüksek! Tasarruf önlemleri almanız önerilir.")
 elif toplam_co2 > 0:
-    st.success("Tebrikler! Düşük karbonlu bir yaşam tarzınız var.")
-else:
-    st.info("Hesaplama için veri girişi yapınız.")
